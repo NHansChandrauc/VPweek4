@@ -1,4 +1,4 @@
-package com.example.assignmentvpweek4.ui.Car
+package com.example.assignmentvpweek4.ui.car
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -1,4 +1,4 @@
-package com.example.assignmentvpweek4.ui.Car.components
+package com.example.assignmentvpweek4.ui.car.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
