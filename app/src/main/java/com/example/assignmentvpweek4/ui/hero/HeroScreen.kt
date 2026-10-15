@@ -1,4 +1,4 @@
-package com.example.assignmentvpweek4.ui.hero
+ package com.example.assignmentvpweek4.ui.hero
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -22,6 +22,9 @@ fun HeroScreen(viewModel: HeroViewModel) {
     val heroes by viewModel.heroes.collectAsState()
     val selectedFilter by viewModel.selectedFilter.collectAsState()
 
+
+    val squadHeroes = heroes.filter { it.inSquad }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -33,9 +36,11 @@ fun HeroScreen(viewModel: HeroViewModel) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        ExpeditionSquadSection()
+
+        ExpeditionSquadSection(squadHeroes = squadHeroes)
 
         Spacer(modifier = Modifier.height(10.dp))
+
 
         FilterChipRow(
             filters = viewModel.filters,

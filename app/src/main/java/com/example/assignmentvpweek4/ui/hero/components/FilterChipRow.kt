@@ -31,7 +31,7 @@ fun FilterChipRow(
                     containerColor = if (isSelected) Color(0xFFD4A373) else Color(0xFF2A2A3C)
                 ),
                 shape = RoundedCornerShape(16.dp),
-                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)
+                contentPadding = PaddingValues(horizontal = 14.dp, vertical = 6.dp)
             ) {
                 Text(
                     text = filter,

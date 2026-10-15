@@ -1,5 +1,6 @@
 package com.example.assignmentvpweek4.ui.hero.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -10,13 +11,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.assignmentvpweek4.data.Hero
 
 @Composable
-fun ExpeditionSquadSection() {
+fun ExpeditionSquadSection(
+    squadHeroes: List<Hero>,
+    maxSquadSize: Int = 4
+) {
+    val totalCp = squadHeroes.sumOf { it.cp }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -28,8 +38,18 @@ fun ExpeditionSquadSection() {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text("● EXPEDITION SQUAD (3/4)", fontSize = 11.sp, color = Color(0xFF81C784), fontWeight = FontWeight.Bold)
-            Text("⚡ 14750 CP", fontSize = 11.sp, color = Color(0xFFFFD54F), fontWeight = FontWeight.Bold)
+            Text(
+                text = "● EXPEDITION SQUAD (${squadHeroes.size}/$maxSquadSize)",
+                fontSize = 11.sp,
+                color = Color(0xFF81C784),
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "⚡ $totalCp CP",
+                fontSize = 11.sp,
+                color = Color(0xFFFFD54F),
+                fontWeight = FontWeight.Bold
+            )
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -40,21 +60,33 @@ fun ExpeditionSquadSection() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                repeat(3) {
+                squadHeroes.take(maxSquadSize).forEach { hero ->
                     Box(
                         modifier = Modifier
                             .size(40.dp)
-                            .background(Color(0xFF2D2D44), RoundedCornerShape(6.dp))
-                    )
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(Color(0xFF2D2D44))
+                    ) {
+                        Image(
+                            painter = painterResource(id = hero.avatarRes),
+                            contentDescription = hero.name,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
                 }
-                Box(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .background(Color(0xFF252535), RoundedCornerShape(6.dp))
-                        .border(1.dp, Color.Gray, RoundedCornerShape(6.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("+", color = Color.Gray, fontSize = 16.sp)
+
+                val emptySlots = maxSquadSize - squadHeroes.size
+                repeat(emptySlots.coerceAtLeast(0)) {
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .background(Color(0xFF252535), RoundedCornerShape(6.dp))
+                            .border(1.dp, Color.Gray, RoundedCornerShape(6.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("+", color = Color.Gray, fontSize = 16.sp)
+                    }
                 }
             }
 
